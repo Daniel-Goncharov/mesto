@@ -9,19 +9,19 @@
 <body>
   <div class="page">
     <header class="header">
-      <div class="logo"></div>
+      <div class="header__logo"></div>
     </header>
     <main class="content">
       <section class="profile">
         <div class="profile__avatar">
-          <img class="profile__pic" src="./images/Kusto.jpg">
+          <img class="profile__pic" src="./images/Kusto.jpg" alt="Аватар пользователя">
         </div>
         <div class="profile__info">
           <div class="profile__name-container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button"></button>
           </div>
-          <h2 class="profile__about">Исследователь океана</h2>
+          <h2 class="profile__job">Исследователь океана</h2>
         </div>
         <div class="profile__add-button"></div>
       </section>
@@ -63,7 +63,7 @@
             </div>
           </li>
           <li class="element">
-            <img class="element__picture" src="./images/elements/Saint Petersburg-Russia.jpg" alt="Исакиевский собор в Санкт-Петербурге">
+            <img class="element__picture" src="./images/elements/Saint-Petersburg-Russia.jpg" alt="Исакиевский собор в Санкт-Петербурге">
             <div class="element__description">
               <h2 class="element__title">Санкт-Петербург</h2>
               <button class="element__like-button"></button>
@@ -81,9 +81,9 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form">
           <input class="popup__input popup__input_name" type="text" name="user" placeholder="Имя">
-          <input class="popup__input popup__input_about" type="text" name="about" placeholder="О себе">
+          <input class="popup__input popup__input_job" type="text" name="about" placeholder="О себе">
+          <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
-        <button class="popup__submit-button" type="submit">Сохранить</button>
       </div>
     </div>
   </div>
