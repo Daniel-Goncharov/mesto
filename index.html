@@ -24,65 +24,52 @@
     </section>
     <section class="elements">
       <ul class="elements__container">
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Bali-Indonesia.jpg" alt="Водопад Бали Индонезия">
-          <div class="element__description">
-            <h2 class="element__title">Бали</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Yosemite-USA.jpg" alt="Зимний горный пейзаж">
-          <div class="element__description">
-            <h2 class="element__title">Калифорния</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Petra-Jordan.jpg" alt="Фасад Храма Петра">
-          <div class="element__description">
-            <h2 class="element__title">Иордания</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Rome-Itali.jpg" alt="Развалины Римского форума">
-          <div class="element__description">
-            <h2 class="element__title">Рим</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Paris-France.jpg" alt="Улица Парижа с Эйфелевой башней на фоне">
-          <div class="element__description">
-            <h2 class="element__title">Париж</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img class="element__picture" src="./images/elements/Saint-Petersburg-Russia.jpg" alt="Исакиевский собор в Санкт-Петербурге">
-          <div class="element__description">
-            <h2 class="element__title">Санкт-Петербург</h2>
-            <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Daniil Goncharov</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_type_profile">
     <div class="popup__container">
-      <button class="popup__closed-button" type="button" aria-label="Закрыть редактор профиля"></button>
+      <button class="popup__closed-button popup__closed-button_type_profile" type="button" aria-label="Закрыть редактор профиля"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="profileForm" method="post">
+      <form class="popup__form popup__form_type_profile" name="profileForm" method="post">
         <input class="popup__input popup__input_data_name" type="text" name="user" placeholder="Имя">
         <input class="popup__input popup__input_data_job" type="text" name="about" placeholder="О себе">
         <button class="popup__submit-button" type="submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
     </div>
   </div>
+  <div class="popup popup_type_add-card">
+    <div class="popup__container">
+      <button class="popup__closed-button popup__closed-button_type_add-card" type="button" aria-label="Закрыть добавление карточки"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form popup__form_type_add-card" name="addСardForm" method="post">
+        <input class="popup__input popup__input_data_place-name" type="text" name="place" placeholder="Название">
+        <input class="popup__input popup__input_data_place-url" type="url" name="pictureUrl" placeholder="Ссылка на картинку">
+        <button class="popup__submit-button" type="submit" aria-label="Создать карточку">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_opene popup_type_view-picture">
+    <div class="popup__container-view-picture">
+      <button class="popup__closed-button popup__closed-button_type_view-picture" type="button" aria-label="Закрыть просмотр изображения"></button>
+      <img class="popup__picture" src="./images/elements/Saint-Petersburg-Russia.jpg" alt="">
+      <h3 class="popup__picture-title">Санкт-Петербург</h3>
+    </div>
+  </div>
+  <template class="template">
+    <li class="element">
+      <img class="element__picture" src="#" alt="">
+      <div class="element__description">
+        <h2 class="element__title"></h2>
+        <button class="element__like-button" type="button" aria-label="Поставить лайк"></button>
+      </div>
+      <button class="element__delete" type="button" aria-label="Удаление карточки"></button>
+    </li>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
