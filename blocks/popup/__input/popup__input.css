@@ -13,9 +13,3 @@
 .popup__input:last-of-type {
   margin-bottom: 0;
 }
-
-.popup__input:focus {
-  outline: none;
-  border: 1px solid #000;
-  box-shadow: 10px 10px 0px #000;
-}
