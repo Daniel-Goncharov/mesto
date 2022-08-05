@@ -77,6 +77,8 @@ function createCards(name, link) {
   function likeCard() {
     buttonLike.classList.toggle('element__like-button_active');
   };
+
+  // обработчик события нажатия на кнопку лайк
   buttonLike.addEventListener('click', likeCard);
 
   // функция увеличения картинки
@@ -165,13 +167,11 @@ function closeAllPopup(evt) {
   }
 };
 
-
 // обработчик события открытия окна профиля
 buttonProfileOn.addEventListener('click', () => {
   fillProfileForm ();
   openPopup(profilePopup);
 });
-
 
 // обработчик события открытия окна добавления карточки
 buttonCardOn.addEventListener('click', () => {
