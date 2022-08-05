@@ -2,6 +2,7 @@
 const profilePopup = document.querySelector('.popup_type_profile');
 const buttonProfileOn = document.querySelector('.profile__edit-button');
 const buttonProfileOff = document.querySelector('.popup__closed-button_type_profile');
+
 const formElementProfile = document.querySelector('.popup__form_type_profile');
 const nameInput = document.querySelector('.popup__input_data_name');
 const jobInput = document.querySelector('.popup__input_data_job');
@@ -105,12 +106,15 @@ function renderCard(name, link) {
 // функция открытия модальных окон
 function openPopup(modal) {
   modal.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupViaEsc);
 };
 
 // функция закрытия модальных окон
 function closePopup(modal) {
   modal.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupViaEsc);
 };
+
 
 // Функция редактирования профиля
 function submitFormHandlerProfile(evt) {
@@ -134,24 +138,59 @@ function createInitialCards() {
   })
 };
 
+// функция заполнения полей профиля и проверки что поля не пустые
+function fillProfileForm () {
+  nameInput.value = userName.textContent;
+  jobInput.value = userJob.textContent;
+  const eventInput = new Event("input");
+  nameInput.dispatchEvent(eventInput);
+  jobInput.dispatchEvent(eventInput);
+};
+
+// функция закрытия окна по нажатию на Esc
+function closePopupViaEsc(evt) {
+  if (evt.key === 'Escape') {
+    const currentOpenPopup = document.querySelector('.popup_opened');
+    closePopup(currentOpenPopup);
+  }
+};
+
+// функция закрытия всех окон
+function closeAllPopup(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  }
+};
+
 // запуск функции отрисовки стартовых карточек из массива
 createInitialCards()
 
 // обработчик события открытия окна профиля
 buttonProfileOn.addEventListener('click', () => {
-  nameInput.value = userName.textContent,
-  jobInput.value = userJob.textContent,
+  fillProfileForm ();
   openPopup(profilePopup);
 });
 
-// обработчик события закрытия окна профиля
-buttonProfileOff.addEventListener('click', () => closePopup(profilePopup));
 
 // обработчик события открытия окна добавления карточки
 buttonCardOn.addEventListener('click', () => {
   formElementCard.reset(),
   openPopup(cardPopup);
 });
+
+// обработчики для закрытия всех окон
+function setEventListenerToAllPopup() {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener('click', closeAllPopup);
+  });
+};
+
+setEventListenerToAllPopup();
+
+
+// обработчик события закрытия окна профиля
+buttonProfileOff.addEventListener('click', () => closePopup(profilePopup));
 
 // обработчик события закрытия окна добавления карточки
 buttonCardOff.addEventListener('click', () => closePopup(cardPopup));
@@ -164,5 +203,3 @@ formElementProfile.addEventListener('submit', submitFormHandlerProfile);
 
 // обработчик события отправки формы в окне добавления карточки
 formElementCard.addEventListener('submit', submitFormHandlerCard);
-
-
