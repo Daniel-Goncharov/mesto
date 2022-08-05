@@ -138,6 +138,9 @@ function createInitialCards() {
   })
 };
 
+// запуск функции отрисовки стартовых карточек из массива
+createInitialCards()
+
 // функция заполнения полей профиля и проверки что поля не пустые
 function fillProfileForm () {
   nameInput.value = userName.textContent;
@@ -162,8 +165,6 @@ function closeAllPopup(evt) {
   }
 };
 
-// запуск функции отрисовки стартовых карточек из массива
-createInitialCards()
 
 // обработчик события открытия окна профиля
 buttonProfileOn.addEventListener('click', () => {
