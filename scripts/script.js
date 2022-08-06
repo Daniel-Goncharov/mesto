@@ -54,7 +54,7 @@ const initialCards = [
 ]
 
 // функция создания секции с карточками
-function createCards(name, link) {
+function createCard(name, link) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector('.element__title');
   const cardPicture = cardElement.querySelector('.element__picture');
@@ -65,31 +65,13 @@ function createCards(name, link) {
   cardPicture.src = link;
   cardPicture.alt = `Изображение ${name}`;
 
-  // функция удалить карточку
-  function deleteCard() {
-    cardElement.remove();
-  };
-
-  // обработчик события нажатия на кнопку удаления карточки
+   // обработчик события нажатия на кнопку удаления карточки
   buttonDelete.addEventListener('click', deleteCard);
 
-  // функция поставить лайк
-  function likeCard() {
-    buttonLike.classList.toggle('element__like-button_active');
-  };
-
-  // обработчик события нажатия на кнопку лайк
+    // обработчик события нажатия на кнопку лайк
   buttonLike.addEventListener('click', likeCard);
 
-  // функция увеличения картинки
-  function openViewPicture(name, link) {
-    popupPictureTitle.textContent = name;
-    popupPicture.src = link;
-    popupPicture.alt = `Изображение ${name}`;
-    openPopup(imagePopup);
-  };
-
-  // обработчик события нажатия на карточку для увеличения
+   // обработчик события нажатия на карточку для увеличения
   cardPicture.addEventListener('click', function () {
     openViewPicture(name, link);
   });
@@ -98,10 +80,27 @@ function createCards(name, link) {
   return cardElement;
 };
 
+ // функция удалить карточку
+ function deleteCard(evt) {
+  evt.target.closest('.element').remove();
+};
+
+// функция поставить лайк
+function likeCard(evt) {
+  evt.target.classList.toggle('element__like-button_active');
+};
+
+// функция увеличения картинки
+function openViewPicture(name, link) {
+  popupPictureTitle.textContent = name;
+  popupPicture.src = link;
+  popupPicture.alt = `Изображение ${name}`;
+  openPopup(imagePopup);
+};
 
 // функция отрисовки карточек
 function renderCard(name, link) {
-  const newCard = createCards(name, link);
+  const newCard = createCard(name, link);
   cardContainer.prepend(newCard);
 };
 
@@ -117,7 +116,6 @@ function closePopup(modal) {
   document.removeEventListener('keydown', closePopupViaEsc);
 };
 
-
 // Функция редактирования профиля
 function submitFormHandlerProfile(evt) {
   evt.preventDefault();
@@ -130,6 +128,7 @@ function submitFormHandlerProfile(evt) {
 function submitFormHandlerCard(evt) {
   evt.preventDefault();
   renderCard(placeImput.value, pictureImput.value);
+  blockSubmitButton(evt.target);
   closePopup(cardPopup);
 };
 
@@ -178,6 +177,13 @@ buttonCardOn.addEventListener('click', () => {
   formElementCard.reset(),
   openPopup(cardPopup);
 });
+
+// функция блокирующая кнопку submit после отправки формы
+function blockSubmitButton(nameForm) {
+  const buttonAddCard = nameForm.querySelector('.popup__button');
+  buttonAddCard.classList.add('popup__button_disabled');
+  buttonAddCard.setAttribute("disabled", "disabled");
+};
 
 // обработчики для закрытия всех окон
 function setEventListenerToAllPopup() {
