@@ -16,9 +16,8 @@ export default class Card {
   // метод для поиска и клонирования разметки карточки
   _getTemplate() {
     const cardElement = document
-    .querySelector('.template')
-    .content
-    .querySelector('.element')
+    .querySelector(this._templateSelector)
+    .content.querySelector('.element')
     .cloneNode(true);
 
     return cardElement;
@@ -45,6 +44,7 @@ export default class Card {
   // метод для удаления карточки
   _deleteCard() {
     this._element.remove();
+    this._element = null;
   };
 
   // метод для лайка карточки

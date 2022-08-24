@@ -1,13 +1,13 @@
 // класс валидации формы и экспорт его содержимого
 export default class FormValidator {
   // конструктор валидатора
-  constructor(objValidation, formItem) {
-    this._formSelector = objValidation.formSelector;
-    this._inputSelector = objValidation.inputSelector;
-    this._submitButtonSelector = objValidation.submitButtonSelector;
-    this._inactiveButtonClass = objValidation.inactiveButtonClass;
-    this._inputErrorClass = objValidation.inputErrorClass;
-    this._errorClass = objValidation.errorClass;
+  constructor(validationConfig, formItem) {
+    this._formSelector = validationConfig.formSelector;
+    this._inputSelector = validationConfig.inputSelector;
+    this._submitButtonSelector = validationConfig.submitButtonSelector;
+    this._inactiveButtonClass = validationConfig.inactiveButtonClass;
+    this._inputErrorClass = validationConfig.inputErrorClass;
+    this._errorClass = validationConfig.errorClass;
     this._formItem = formItem;
   }
 
@@ -64,6 +64,13 @@ export default class FormValidator {
     }
   };
 
+  // метод блокирующий кнопку submit после отправки формы
+  disableSubmitButton(nameForm) {
+    const buttonAddCard = nameForm.querySelector(this._submitButtonSelector);
+    buttonAddCard.classList.add(this._inactiveButtonClass);
+    buttonAddCard.setAttribute("disabled", "disabled");
+  };
+
   // метод для установки слушателей в полях формы
   _setEventListener(formElement) {
     const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
@@ -76,6 +83,7 @@ export default class FormValidator {
       });
     });
   }
+
 
   // метод запускающий валидацию
   enableValidation() {
