@@ -1,8 +1,10 @@
+// импорт модулей
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
 // константы профайла
 const profilePopup = document.querySelector('.popup_type_profile');
 const buttonProfileOn = document.querySelector('.profile__edit-button');
-const buttonProfileOff = document.querySelector('.popup__closed-button_type_profile');
-
 const formElementProfile = document.querySelector('.popup__form_type_profile');
 const nameInput = document.querySelector('.popup__input_data_name');
 const jobInput = document.querySelector('.popup__input_data_job');
@@ -12,18 +14,21 @@ const userJob = document.querySelector('.profile__job');
 // константы добавления карточки
 const cardPopup = document.querySelector('.popup_type_add-card');
 const buttonCardOn = document.querySelector('.profile__add-button');
-const buttonCardOff = document.querySelector('.popup__closed-button_type_add-card');
 const formElementCard = document.querySelector('.popup__form_type_add-card');
 const placeImput = document.querySelector('.popup__input_data_place-name');
 const pictureImput = document.querySelector('.popup__input_data_place-url');
 const cardTemplate = document.querySelector('.template').content.querySelector('.element');
 const cardContainer = document.querySelector('.elements__container');
 
-// константы увеличенной картинки
-const imagePopup = document.querySelector('.popup_type_view-picture');
-const buttonImageOff = document.querySelector('.popup__closed-button_type_view-picture');
-const popupPicture = document.querySelector('.popup__picture');
-const popupPictureTitle = document.querySelector('.popup__picture-title');
+// объект с селекторами для валидации
+const objValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 // массив стартовых карточек
 const initialCards = [
@@ -53,57 +58,6 @@ const initialCards = [
   },
 ]
 
-// функция создания секции с карточками
-function createCard(name, link) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector('.element__title');
-  const cardPicture = cardElement.querySelector('.element__picture');
-  const buttonDelete = cardElement.querySelector('.element__delete');
-  const buttonLike = cardElement.querySelector('.element__like-button');
-
-  cardTitle.textContent = name;
-  cardPicture.src = link;
-  cardPicture.alt = `Изображение ${name}`;
-
-   // обработчик события нажатия на кнопку удаления карточки
-  buttonDelete.addEventListener('click', deleteCard);
-
-    // обработчик события нажатия на кнопку лайк
-  buttonLike.addEventListener('click', likeCard);
-
-   // обработчик события нажатия на карточку для увеличения
-  cardPicture.addEventListener('click', function () {
-    openViewPicture(name, link);
-  });
-
-  // возвращает переменную cardElement как результат работы функции для ее использования в функциях генерации стартовых карточек и отрисовки новых
-  return cardElement;
-};
-
- // функция удалить карточку
- function deleteCard(evt) {
-  evt.target.closest('.element').remove();
-};
-
-// функция поставить лайк
-function likeCard(evt) {
-  evt.target.classList.toggle('element__like-button_active');
-};
-
-// функция увеличения картинки
-function openViewPicture(name, link) {
-  popupPictureTitle.textContent = name;
-  popupPicture.src = link;
-  popupPicture.alt = `Изображение ${name}`;
-  openPopup(imagePopup);
-};
-
-// функция отрисовки карточек
-function renderCard(name, link) {
-  const newCard = createCard(name, link);
-  cardContainer.prepend(newCard);
-};
-
 // функция открытия модальных окон
 function openPopup(modal) {
   modal.classList.add('popup_opened');
@@ -127,23 +81,35 @@ function submitFormHandlerProfile(evt) {
 // Функция добавления новой карточки
 function submitFormHandlerCard(evt) {
   evt.preventDefault();
-  renderCard(placeImput.value, pictureImput.value);
+  const item = {
+    name: placeImput.value,
+    link: pictureImput.value,
+  };
+  const card = new Card(item, cardTemplate, openPopup);
+  const cardElement = card.generateCard();
+  cardContainer.prepend(cardElement);
   blockSubmitButton(evt.target);
   closePopup(cardPopup);
 };
 
-// Функция создания стартовых карточек из массива
-function createInitialCards() {
-  initialCards.forEach(function (data) {
-    renderCard(data.name, data.link);
-  })
-};
+// Создание стартовых карточек из массива
+initialCards.forEach(function (item) {
+    const card = new Card(item, cardTemplate, openPopup);
+    const cardElement = card.generateCard();
 
-// запуск функции отрисовки стартовых карточек из массива
-createInitialCards()
+  cardContainer.append(cardElement);
+  });
+
+// Добавление валидации для формы профайла
+const profileFormValidation = new FormValidator(objValidation, formElementProfile);
+profileFormValidation.enableValidation();
+
+// Добавление валидации для формы добавления карточки
+const cardFormValidation = new FormValidator(objValidation, formElementCard);
+cardFormValidation.enableValidation();
 
 // функция заполнения полей профиля и проверки что поля не пустые
-function fillProfileForm () {
+function fillProfileForm() {
   nameInput.value = userName.textContent;
   jobInput.value = userJob.textContent;
   const eventInput = new Event("input");
@@ -161,14 +127,16 @@ function closePopupViaEsc(evt) {
 
 // функция закрытия всех окон
 function closeAllPopup(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup(evt.target);
+  const target = evt.target;
+  const cover = target.closest('.popup');
+  if (target.classList.contains('popup__closed-button') || target === cover) {
+    closePopup(cover);
   }
 };
 
 // обработчик события открытия окна профиля
 buttonProfileOn.addEventListener('click', () => {
-  fillProfileForm ();
+  fillProfileForm();
   openPopup(profilePopup);
 });
 
@@ -185,7 +153,7 @@ function blockSubmitButton(nameForm) {
   buttonAddCard.setAttribute("disabled", "disabled");
 };
 
-// обработчики для закрытия всех окон
+// функция вешающая обработчики для закрытия всех окон
 function setEventListenerToAllPopup() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach((popupElement) => {
@@ -193,17 +161,8 @@ function setEventListenerToAllPopup() {
   });
 };
 
+// вызов функции вешающей обработчики закрытия окон
 setEventListenerToAllPopup();
-
-
-// обработчик события закрытия окна профиля
-buttonProfileOff.addEventListener('click', () => closePopup(profilePopup));
-
-// обработчик события закрытия окна добавления карточки
-buttonCardOff.addEventListener('click', () => closePopup(cardPopup));
-
-// обработчик события нажатия на кнопку закрыть окно увеличения картинки
-buttonImageOff.addEventListener('click', () => closePopup(imagePopup));
 
 // обработчик события отправки формы в окне профиля
 formElementProfile.addEventListener('submit', submitFormHandlerProfile);
