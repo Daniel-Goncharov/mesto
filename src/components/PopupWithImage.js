@@ -1,7 +1,7 @@
 // импорт класса попап
-import Popup from './Popup.js';
+import Popup from '../components/Popup.js';
 // импорт селекторов
-import { selectors } from './constants.js';
+import { selectors } from '../utils/constants.js';
 
 // класс попапа с картинкой открывает картинку из карточки на весь экран и наследует часть методов от класса попап
 export default class PopupWithImage extends Popup {

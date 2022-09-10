@@ -1,5 +1,5 @@
 // импорт селекторов
-import { selectors } from './constants.js';
+import { selectors } from '../utils/constants.js';
 
 // класс попапа отвечает за открытие и закрытие попапа
 export default class Popup {

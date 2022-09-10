@@ -1,5 +1,5 @@
 // импорт констант с селекторами элементов внутри темплейта карточки
-import { cardTemplateSelectors } from './constants.js';
+import { cardTemplateSelectors } from '../utils/constants.js';
 
 // класс карточки - создаёт карточку с текстом и ссылкой на изображение
 export default class Card {

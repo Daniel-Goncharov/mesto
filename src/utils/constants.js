@@ -70,30 +70,37 @@ export const popupViewPicture = document.querySelector(selectors.popupViewPictur
 export const popupImgPicture = document.querySelector(selectors.popupPicture); // увеличенная картинка
 export const captionOfPopupImg = document.querySelector(selectors.popupTitle); // подпись увеличенной картинки
 
+// константы для корректной работы импорта картинок через webpack
+const baliImage = new URL('../images/elements/Bali-Indonesia.jpg', import.meta.url);
+const californiaImage = new URL('../images/elements/Yosemite-USA.jpg', import.meta.url);
+const jordanImage = new URL('../images/elements/Petra-Jordan.jpg', import.meta.url);
+const romeImage = new URL('../images/elements/Rome-Itali.jpg', import.meta.url);
+const parisImage = new URL('../images/elements/Paris-France.jpg', import.meta.url);
+const petersburgImage = new URL('../images/elements/Saint-Petersburg-Russia.jpg', import.meta.url);
 // массив стартовых карточек
 export const initialCards = [
   {
     name: 'Бали',
-    link: './images/elements/Bali-Indonesia.jpg'
+    link: baliImage
   },
   {
     name: 'Калифорния',
-    link: './images/elements/Yosemite-USA.jpg'
+    link: californiaImage
   },
   {
     name: 'Иордания',
-    link: './images/elements/Petra-Jordan.jpg'
+    link: jordanImage
   },
   {
     name: 'Рим',
-    link: './images/elements/Rome-Itali.jpg'
+    link: romeImage
   },
   {
     name: 'Париж',
-    link: './images/elements/Paris-France.jpg'
+    link: parisImage
   },
   {
     name: 'Санкт-Петербург',
-    link: './images/elements/Saint-Petersburg-Russia.jpg'
+    link: petersburgImage
   },
 ]

@@ -1,5 +1,5 @@
 // импорт селекторов
-import { selectors } from "./constants.js";
+import { selectors } from "../utils/constants.js";
 
 // класс юзеринфо - отвечает за управление отображением информации о пользователе на странице
 export default class UserInfo {

@@ -1,7 +1,7 @@
 // импорт класса попап
-import Popup from './Popup.js';
+import Popup from '../components/Popup.js';
 // импорт селекторов
-import { selectors } from './constants.js';
+import { selectors } from '../utils/constants.js';
 
 // класс попапа с формой - добавляет классу попап методы по сбору данных из полей импута и их обработке и наследует часть методов от класса попап и экспорт его содержимого
 export default class PopupWithForm extends Popup {

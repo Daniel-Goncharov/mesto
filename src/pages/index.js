@@ -1,3 +1,6 @@
+// импорт файла со стилями CSS
+import './index.css';
+
 // импорт селекторов и констант
 import {
   selectors,
@@ -12,15 +15,15 @@ import {
   nameCard,
   linkCard,
   profileButtonElement
-} from './constants.js';
+} from '../utils/constants.js';
 
 // импорт классов
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import UserInfo from './UserInfo.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
 
 // попап с картинкой на весь экран
 const popupWithImage = new PopupWithImage(selectors.popupViewPicture);
