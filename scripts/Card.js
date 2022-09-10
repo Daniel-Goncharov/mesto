@@ -1,63 +1,58 @@
-// константы увеличенной картинки
-const imagePopup = document.querySelector('.popup_type_view-picture');
-const popupPicture = imagePopup.querySelector('.popup__picture');
-const popupPictureTitle = imagePopup.querySelector('.popup__picture-title');
+// импорт констант с селекторами элементов внутри темплейта карточки
+import { cardTemplateSelectors } from './constants.js';
 
-// класс карточки и экспорт его содержимого
+// класс карточки - создаёт карточку с текстом и ссылкой на изображение
 export default class Card {
   // конструктор карточки
-  constructor(data, templateSelector, openPopup) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor({ name, link }, templateSelector, handleOpenBigImage) {
+    this._name = name;
+    this._link = link;
     this._templateSelector = templateSelector;
-    this.openPopup = openPopup;
+    this.handleOpenBigImage = handleOpenBigImage;
   }
 
   // метод для поиска и клонирования разметки карточки
-  _getTemplate() {
+  _getCardElement() {
     const cardElement = document
-    .querySelector(this._templateSelector)
-    .content.querySelector('.element')
-    .cloneNode(true);
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector(cardTemplateSelectors.cardElement)
+      .cloneNode(true);
 
     return cardElement;
   }
 
   // метод для наполнения карточки нужным контентом
   generateCard() {
-    this._element = this._getTemplate();
-    this.cardPicture = this._element.querySelector('.element__picture');
-    this._element.querySelector('.element__title').textContent = this._name;
+    this._cardElement = this._getCardElement();
+    this.cardPicture = this._cardElement.querySelector(cardTemplateSelectors.elementsImage);
     this.cardPicture.src = this._link;
-    this.cardPicture.alt = `Изображение ${this._name}`;
+    this.cardPicture.alt = this._name;
+    this._cardElement.querySelector(cardTemplateSelectors.elementsName).textContent = this._name;
     this._setEventListeners();
-    return this._element
+    return this._cardElement;
   }
 
   // метод для установки слушателей внутри карточки
   _setEventListeners() {
-    this._element.querySelector('.element__delete').addEventListener('click', () => {this._deleteCard()});
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {this._likeCard()});
-    this.cardPicture.addEventListener('click', () => {this._openViewPicture()});
+    this.cardPicture.addEventListener('click', () => this._openViewPicture());
+    this._cardElement.querySelector(cardTemplateSelectors.buttonLike).addEventListener('click', () => this._likeCard());
+    this._cardElement.querySelector(cardTemplateSelectors.buttonDel).addEventListener('click', () => this._deleteCard());
+  }
+
+  // метод для открытия увеличенной карточки
+  _openViewPicture() {
+    this.handleOpenBigImage(this._link, this._name);
+  }
+
+  // метод для лайка карточки
+  _likeCard() {
+    this._cardElement.querySelector(cardTemplateSelectors.buttonLike).classList.toggle(cardTemplateSelectors.liked);
   }
 
   // метод для удаления карточки
   _deleteCard() {
-    this._element.remove();
-    this._element = null;
-  };
-
-  // метод для лайка карточки
-  _likeCard() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
-  };
-
-  // метод для открытия увеличенной карточки
-  _openViewPicture() {
-    popupPictureTitle.textContent = this._name;
-    popupPicture.src = this._link;
-    popupPicture.alt = `Изображение ${this._name}`;
-    this.openPopup(imagePopup);
-  };
+    this._cardElement.remove();
+    this._cardElement = null;
+  }
 }
-
