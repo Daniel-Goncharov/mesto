@@ -28,14 +28,24 @@ import UserInfo from '../components/UserInfo.js';
 // попап с картинкой на весь экран
 const popupWithImage = new PopupWithImage(selectors.popupViewPicture);
 
+const user = new UserInfo({
+  userNameSelector: selectors.profileName,
+  userJobSelector: selectors.profileJob,
+});
 // попап редактора профиля
-const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, () => {
-  const user = new UserInfo({
-    userNameSelector: selectors.profileName,
-    userJobSelector: selectors.profileJob
-  });
-  user.setUserInfo();
+const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (data) => {
+  user.setUserInfo(data);
   popupWithFormProfile.closePopup();
+});
+popupWithFormProfile.setEventListeners();
+
+// подключение слушателя кнопки открытия попапа редактирования профиля
+buttonEdit.addEventListener('click', () => {
+  const { name, job } = user.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = job;
+  profileFormValidation.resetForm();
+  popupWithFormProfile.openPopup();
 });
 
 // попап добавления карточки
@@ -45,13 +55,15 @@ const popupWithFormCard = new PopupWithForm(selectors.popupCard);
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
+      const card = new Card(item, selectors.cardTemplate, popupWithImage.openPopup);
       const cardElement = card.generateCard();
       cardsList.addItem(cardElement);
     }
   },
   selectors.placeForCard
 );
+
+
 
 // отрисовка стартовых карточек из массива
 cardsList.renderItems();
@@ -75,7 +87,7 @@ function submitFormHandlerCard() {
     const oneCard = new Section({
       items: submitCard,
       renderer: (item) => {
-        const card = new Card(item, selectors.cardTemplate, popupWithImage.handleCardClick);
+        const card = new Card(item, selectors.cardTemplate, popupWithImage.openPopup);
         const cardElement = card.generateCard();
         oneCard.addItem(cardElement);
       }
@@ -90,17 +102,7 @@ submitFormHandlerCard();
 // подключение слушателя кнопки открытия попапа добавления карточки
 buttonAdd.addEventListener('click', () => {
   popupWithFormCard.openPopup();
-  cardFormValidation._disableSubmitButton(cardForm);
+  cardFormValidation.resetForm();
 });
 
-// подключение слушателя кнопки открытия попапа редактирования профиля
-buttonEdit.addEventListener('click', () => {
-  popupWithFormProfile.openPopup();
-  const user = new UserInfo({
-    userNameSelector: selectors.profileName,
-    userJobSelector: selectors.profileJob
-  });
-  nameInput.value = user.getUserInfo().name;
-  jobInput.value = user.getUserInfo().info;
-  profileFormValidation.enableButtonState(profileButtonElement);
-});
+

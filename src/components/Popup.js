@@ -5,6 +5,7 @@ import { selectors } from '../utils/constants.js';
 export default class Popup {
   // конструктор попапа
   constructor(popupSelector) {
+    this._popupSelector = popupSelector;
     this._popup = document.querySelector(popupSelector);
   }
 
