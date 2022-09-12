@@ -80,27 +80,27 @@ const petersburgImage = new URL('../images/elements/Saint-Petersburg-Russia.jpg'
 // массив стартовых карточек
 export const initialCards = [
   {
-    name: 'Бали',
-    link: baliImage
+    place: 'Бали',
+    pictureUrl: baliImage
   },
   {
-    name: 'Калифорния',
-    link: californiaImage
+    place: 'Калифорния',
+    pictureUrl: californiaImage
   },
   {
-    name: 'Иордания',
-    link: jordanImage
+    place: 'Иордания',
+    pictureUrl: jordanImage
   },
   {
-    name: 'Рим',
-    link: romeImage
+    place: 'Рим',
+    pictureUrl: romeImage
   },
   {
-    name: 'Париж',
-    link: parisImage
+    place: 'Париж',
+    pictureUrl: parisImage
   },
   {
-    name: 'Санкт-Петербург',
-    link: petersburgImage
+    place: 'Санкт-Петербург',
+    pictureUrl: petersburgImage
   },
 ]

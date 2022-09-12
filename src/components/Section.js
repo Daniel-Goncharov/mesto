@@ -6,6 +6,7 @@ export default class Section {
     this._renderer = renderer;
     this._container = document.querySelector(selector);
   }
+
   // метод отрисовывающий карточки
   renderItems() {
     this._renderedItems.forEach(item => this._renderer(item))

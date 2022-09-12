@@ -4,9 +4,9 @@ import { cardTemplateSelectors } from '../utils/constants.js';
 // класс карточки - создаёт карточку с текстом и ссылкой на изображение
 export default class Card {
   // конструктор карточки
-  constructor({ name, link }, templateSelector, handleOpenBigImage) {
-    this._name = name;
-    this._link = link;
+  constructor({ place, pictureUrl }, templateSelector, handleOpenBigImage) {
+    this._name = place;
+    this._link = pictureUrl;
     this._templateSelector = templateSelector;
     this.handleOpenBigImage = handleOpenBigImage;
   }

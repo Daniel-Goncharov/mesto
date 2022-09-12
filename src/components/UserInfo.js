@@ -21,6 +21,5 @@ export default class UserInfo {
   setUserInfo(data) {
     this._userNameSelector.textContent = data.name;
     this._userJobSelector.textContent = data.job;
-    console.log(data);
   }
 }

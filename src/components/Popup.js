@@ -13,14 +13,12 @@ export default class Popup {
   openPopup() {
     this._popup.classList.add(selectors.popupOpened);
     document.addEventListener('keydown', this._closePopupOnEsc);
-    this.setEventListeners();
   }
 
   // метод закрывающий попап
   closePopup() {
     this._popup.classList.remove(selectors.popupOpened);
     document.removeEventListener('keydown', this._closePopupOnEsc);
-    this._popup.removeEventListener('click', this._closePopupByClick);
   }
 
   // метод закрывающий попап нажатием на escape
