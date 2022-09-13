@@ -29,8 +29,8 @@ const user = new UserInfo({
 });
 
 // попап редактора профиля
-const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (data) => {
-  user.setUserInfo(data);
+const popupWithFormProfile = new PopupWithForm(selectors.popupProfile, (submitProfileData) => {
+  user.setUserInfo(submitProfileData);
   popupWithFormProfile.closePopup();
 });
 popupWithFormProfile.setEventListeners();
@@ -74,8 +74,7 @@ selectors.placeForCard
 cardsList.renderItems();
 
 // попап добавления карточки
-const popupWithFormCard = new PopupWithForm(selectors.popupCard, () => {
-  const submitCard = popupWithFormCard._getInputValues();
+const popupWithFormCard = new PopupWithForm(selectors.popupCard, (submitCard) => {
   const cardElement = createCard(submitCard);
   cardsList.addItem(cardElement);
   popupWithFormCard.closePopup();
