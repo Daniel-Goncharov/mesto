@@ -33,5 +33,5 @@
 * В разработке использована парадигма ООП. Добавлены классы Card, FormValidator, Popup, PopupWithForm(наследует часть методов из класса Popup), PopupWithImage(наследует часть методов из класса Popup), Section, UserInfo
 
 
-ссылка на проект в github-pages (временно не работает): https://daniel-goncharov.github.io/mesto/
+ссылка на проект в github-pages: https://daniel-goncharov.github.io/mesto/
 
