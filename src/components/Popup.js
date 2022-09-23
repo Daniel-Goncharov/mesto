@@ -7,6 +7,7 @@ export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
     this._popup = document.querySelector(popupSelector);
+    this._closePopupOnEsc = this._closePopupOnEsc.bind(this);
   }
 
   // метод открывающий попап
@@ -29,16 +30,17 @@ export default class Popup {
   }
 
   // метод закрывающий попап по клику мышкой
-  _closePopupByClick = (evt) => {
-    const target = evt.target;
-    const modal = target.closest(selectors.popup);
-    if (target.classList.contains(selectors.closedButton) || target === modal) {
+  _closePopupByClick(evt) {
+    if (evt.target.classList.contains(selectors.closedButton) || evt.target.classList.contains(selectors.popup))
+    {
       this.closePopup();
     }
   }
 
   // установка слушателя закрытия попапов по клику мышкой
   setEventListeners() {
-    this._popup.addEventListener('click', this._closePopupByClick);
+    this._popup.addEventListener('click', (evt) => {
+      this._closePopupByClick(evt);
+    });
   }
 }

@@ -4,11 +4,18 @@ import { cardTemplateSelectors } from '../utils/constants.js';
 // класс карточки - создаёт карточку с текстом и ссылкой на изображение
 export default class Card {
   // конструктор карточки
-  constructor({ place, pictureUrl }, templateSelector, handleOpenBigImage) {
-    this._name = place;
-    this._link = pictureUrl;
+  constructor(data, handleOpenBigImage, handleLikeClick, handleTrashBinClick, templateSelector, userId) {
+    this._data = data;
+    this.cardId = data._id;
+    this._name = data.name;
+    this._link = data.link;
+    this._likes = data.likes;
+    this._ownerId = data.owner._id;
+    this._handleOpenBigImage = handleOpenBigImage;
+    this._handleLikeClick = handleLikeClick;
+    this._handleTrashBinClick = handleTrashBinClick;
     this._templateSelector = templateSelector;
-    this.handleOpenBigImage = handleOpenBigImage;
+    this._myId = userId;
   }
 
   // метод для поиска и клонирования разметки карточки
@@ -22,36 +29,59 @@ export default class Card {
     return cardElement;
   }
 
+  // метод обновляющий количество лайков для счетчика
+  updateLikeCounter(newLike) {
+    this._likes = newLike.likes;
+  }
+
+  // метод изменяющий отображение состояния кнопки лайка и количества лайков счетчика
+  updateLikesView() {
+    this._likeCounter.textContent = this._likes.length;
+    if (this.isLiked()) {
+      this._likeButton.classList.add(cardTemplateSelectors.liked);
+    } else {
+      this._likeButton.classList.remove(cardTemplateSelectors.liked);
+    }
+  }
+
+  // метод проверяющий лайкнута ли карточка пользователем
+  isLiked() {
+    return this._likes.some((item) => item._id === this._myId);
+  }
+
   // метод для наполнения карточки нужным контентом
   generateCard() {
     this._cardElement = this._getCardElement();
-    this.cardPicture = this._cardElement.querySelector(cardTemplateSelectors.elementsImage);
-    this.cardPicture.src = this._link;
-    this.cardPicture.alt = this._name;
-    this._cardElement.querySelector(cardTemplateSelectors.elementsName).textContent = this._name;
+    this._cardPicture = this._cardElement.querySelector(cardTemplateSelectors.elementsImage);
+    this._cardTitle = this._cardElement.querySelector(cardTemplateSelectors.elementsName);
+    this._cardPicture.src = this._link;
+    this._cardPicture.alt = this._name;
+    this._cardTitle.textContent = this._name;
+    this._trashBin = this._cardElement.querySelector(cardTemplateSelectors.buttonDel);
+    this._likeCounter = this._cardElement.querySelector(cardTemplateSelectors.likedCounter);
+    this._likeButton = this._cardElement.querySelector(cardTemplateSelectors.buttonLike);
+    this._likeCounter.textContent = this._likes.length;
+    if (this._ownerId != this._myId) {
+      this._trashBin.remove();
+    }; // если карточка не принадлежит пользователю, то кнопку удаления убрать
+
+    if (this.isLiked()) {
+      this._likeButton.classList.add(cardTemplateSelectors.liked);
+    }; // если пользователь лайкал эту карточку, то кнопка лайка изменится на нажатую
+
     this._setEventListeners();
     return this._cardElement;
   }
 
   // метод для установки слушателей внутри карточки
   _setEventListeners() {
-    this.cardPicture.addEventListener('click', () => this._openViewPicture());
-    this._cardElement.querySelector(cardTemplateSelectors.buttonLike).addEventListener('click', () => this._likeCard());
-    this._cardElement.querySelector(cardTemplateSelectors.buttonDel).addEventListener('click', () => this._deleteCard());
+    this._cardPicture.addEventListener('click', () => this._handleOpenBigImage(this._name, this._link));
+    this._likeButton.addEventListener('click', () => this._handleLikeClick(this));
+    this._trashBin.addEventListener('click', () => this._handleTrashBinClick(this));
   }
 
-  // метод для открытия увеличенной карточки
-  _openViewPicture() {
-    this.handleOpenBigImage(this._link, this._name);
-  }
-
-  // метод для лайка карточки
-  _likeCard() {
-    this._cardElement.querySelector(cardTemplateSelectors.buttonLike).classList.toggle(cardTemplateSelectors.liked);
-  }
-
-  // метод для удаления карточки
-  _deleteCard() {
+   // метод для удаления карточки
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }

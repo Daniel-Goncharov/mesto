@@ -6,6 +6,7 @@ export const cardTemplateSelectors = {
   buttonLike: '.element__like-button',
   buttonDel: '.element__delete',
   liked: 'element__like-button_active',
+  likedCounter: '.element__like-counter',
 }
 
 // константа с селекторами
@@ -13,7 +14,12 @@ export const selectors = {
   cardTemplate: '.template',
   placeForCard: '.elements__container',
   editProfileButton: '.profile__edit-button',
+  popupDelete: '.popup_type_delete',
   popupProfile: '.popup_type_profile',
+  popupAvatar: '.popup_type_add-avatar',
+  avatarBtn: '.profile__avatar-button',
+  AvatarImg: '.profile__pic',
+  formAvatar: '.popup__form_type_add-avatar',
   formProfile: '.popup__form_type_profile',
   profileName: '.profile__name',
   profileJob: '.profile__job',
@@ -24,10 +30,11 @@ export const selectors = {
   formCard: '.popup__form_type_add-card',
   nameCard: '.popup__input_data_place-name',
   linkCard: '.popup__input_data_place-url',
-  popup: '.popup',
+  popup: 'popup',
   popupOpened: 'popup_opened',
   closedButton: 'popup__closed-button',
   formSelector: '.popup__form',
+  popupDeleteContainer: '.popup__container_type_delete',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
@@ -35,7 +42,7 @@ export const selectors = {
   errorClass: 'popup__error_visible',
   popupViewPicture: '.popup_type_view-picture',
   popupPicture: '.popup__picture',
-  popupTitle: '.popup__picture-title'
+  popupTitle: '.popup__picture-title',
 }
 
 // сонстанта с селекторами для валидизации форм
@@ -50,7 +57,9 @@ export const validationConfig = {
 
 // константы попапа редактирования профиля
 export const profileForm = document.querySelector(selectors.formProfile); // форма редактирования профиля
-export const buttonEdit = document.querySelector(selectors.editProfileButton); // кнопка редактирования профиля
+export const avatarForm = document.querySelector(selectors.formAvatar); // форма редактирования аватара
+export const avatarButton = document.querySelector(selectors.avatarBtn); // кнопка редактирования аватара
+export const profileEditbutton = document.querySelector(selectors.editProfileButton); // кнопка редактирования профиля
 export const popupProfile = document.querySelector(selectors.popupProfile); // попап редактирования профиля
 export const profileButtonElement = popupProfile.querySelector(selectors.submitButtonSelector); // кнопка отправки профиля
 export const nameInput = document.querySelector(selectors.nameInput); // поле ввода имени профиля
@@ -60,7 +69,7 @@ export const profileJob = document.querySelector(selectors.profileJob); // dom �
 
 // константы попапа добавления карточки
 export const cardForm = document.querySelector(selectors.formCard); // форма редактирования карточки
-export const buttonAdd = document.querySelector(selectors.addCardButton); // кнопка добавления карточки
+export const addCardButton = document.querySelector(selectors.addCardButton); // кнопка добавления карточки
 export const popupCard = document.querySelector(selectors.popupCard); // попап добавления карточки
 export const nameCard = document.querySelector(selectors.nameCard); // поле ввода названия места карточки
 export const linkCard = document.querySelector(selectors.linkCard); // поле ввода ссылки на картинку карточки
@@ -69,38 +78,3 @@ export const linkCard = document.querySelector(selectors.linkCard); // поле 
 export const popupViewPicture = document.querySelector(selectors.popupViewPicture); // попап увеличенной картинки
 export const popupImgPicture = document.querySelector(selectors.popupPicture); // увеличенная картинка
 export const captionOfPopupImg = document.querySelector(selectors.popupTitle); // подпись увеличенной картинки
-
-// константы для корректной работы импорта картинок через webpack
-const baliImage = new URL('../images/elements/Bali-Indonesia.jpg', import.meta.url);
-const californiaImage = new URL('../images/elements/Yosemite-USA.jpg', import.meta.url);
-const jordanImage = new URL('../images/elements/Petra-Jordan.jpg', import.meta.url);
-const romeImage = new URL('../images/elements/Rome-Itali.jpg', import.meta.url);
-const parisImage = new URL('../images/elements/Paris-France.jpg', import.meta.url);
-const petersburgImage = new URL('../images/elements/Saint-Petersburg-Russia.jpg', import.meta.url);
-// массив стартовых карточек
-export const initialCards = [
-  {
-    place: 'Бали',
-    pictureUrl: baliImage
-  },
-  {
-    place: 'Калифорния',
-    pictureUrl: californiaImage
-  },
-  {
-    place: 'Иордания',
-    pictureUrl: jordanImage
-  },
-  {
-    place: 'Рим',
-    pictureUrl: romeImage
-  },
-  {
-    place: 'Париж',
-    pictureUrl: parisImage
-  },
-  {
-    place: 'Санкт-Петербург',
-    pictureUrl: petersburgImage
-  },
-]

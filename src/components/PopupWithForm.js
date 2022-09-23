@@ -10,13 +10,15 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._handleSubmitForm = handleSubmitForm;
     this._form = this._popup.querySelector(selectors.formSelector);
+    this._submitButton = this._form.querySelector(selectors.submitButtonSelector);
+    this._permanentText = this._submitButton.textContent;
     this._inputList = Array.from(this._popup.querySelectorAll(selectors.inputSelector));
   }
 
   // метод закрытия попапа с фомой наследуюмый от попапа и очищающий поля формы
   closePopup() {
-    super.closePopup();
     this._form.reset();
+    super.closePopup();
   }
 
   // метод собирающий значения из всех полей ввода
@@ -35,5 +37,14 @@ export default class PopupWithForm extends Popup {
       evt.preventDefault();
       this._handleSubmitForm(this._getInputValues());
     });
+  }
+
+  // метод отображающий загрузку данных через состояние кнопки отправки данных
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._submitButton.textContent = "Сохранение...";
+    } else {
+      this._submitButton.textContent = this._permanentText;
+    }
   }
 }

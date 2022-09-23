@@ -1,19 +1,27 @@
 // класс секции - отвечает за отрисовку элементов на странице.
 export default class Section {
   // конструктор секции
-  constructor({ items , renderer }, selector) {
-    this._renderedItems = items;
+  constructor({ renderer }, selector) {
+    // this._renderedItems = items;
     this._renderer = renderer;
     this._container = document.querySelector(selector);
   }
 
   // метод отрисовывающий карточки
-  renderItems() {
-    this._renderedItems.forEach(item => this._renderer(item))
+  renderItems(items) {
+    items.forEach((item) => {
+      const card = this._renderer(item);
+      this.addAppendItem(card);
+    })
   }
 
-  // метод принимающий DOM-элемент и добавляющий его в то место разметки, куда его нужно вставить
-  addItem(element) {
+  // метод принимающий DOM-элемент и добавляющий его после предидущего
+  addAppendItem(element) {
+    this._container.append(element);
+  }
+
+  // метод принимающий DOM-элемент и добавляющий перед остальными элементами
+  addPrependItem(element) {
     this._container.prepend(element);
   }
 }
