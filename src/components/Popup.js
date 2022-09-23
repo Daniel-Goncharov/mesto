@@ -39,7 +39,7 @@ export default class Popup {
 
   // установка слушателя закрытия попапов по клику мышкой
   setEventListeners() {
-    this._popup.addEventListener('click', (evt) => {
+    this._popup.addEventListener('mousedown', (evt) => {
       this._closePopupByClick(evt);
     });
   }

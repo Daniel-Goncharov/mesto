@@ -21,6 +21,13 @@ export default class PopupWithForm extends Popup {
     super.closePopup();
   }
 
+  // метод вставляющий данные в импуты
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    });
+  }
+
   // метод собирающий значения из всех полей ввода
   _getInputValues() {
     this._formValues = {};

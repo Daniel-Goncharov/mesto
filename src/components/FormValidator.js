@@ -71,7 +71,7 @@ export default class FormValidator {
   }
 
   // метод очищающий поля форм от сообщений об ошибках и проверяющий состояние кнопки
-  resetForm() {
+  resetValidation() {
     this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
@@ -94,7 +94,7 @@ export default class FormValidator {
     this._formEl.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    this._setEventListeners(this._formEl);
+    this._setEventListeners();
   };
 }
 

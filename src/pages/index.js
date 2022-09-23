@@ -5,14 +5,11 @@ import './index.css';
 import {
   selectors,
   validationConfig,
-  initialCards,
   profileForm,
   avatarForm,
   cardForm,
   profileEditbutton,
   addCardButton,
-  nameInput,
-  jobInput,
   avatarButton,
 } from '../utils/constants.js';
 
@@ -60,9 +57,9 @@ avatarFormValidation.enableValidation();
 
 // создаем обект с классом юзеринфо
 const user = new UserInfo({
-  userNameSelector: selectors.profileName,
-  userJobSelector: selectors.profileJob,
-  userAvatarSelector: selectors.AvatarImg,
+  userName: selectors.profileName,
+  userJob: selectors.profileJob,
+  userAvatar: selectors.AvatarImg,
 });
 
 // функция создания карточки
@@ -186,20 +183,18 @@ function handleTrashBinClick(card) {
 }
 
 avatarButton.addEventListener('click', () => {
-  avatarFormValidation.resetForm();
+  avatarFormValidation.resetValidation();
   popupWithFormAvatar.openPopup();
 });
 
 // подключение слушателя кнопки открытия попапа редактирования профиля
 profileEditbutton.addEventListener('click', () => {
-  const { name, about } = user.getUserInfo();
-  nameInput.value = name;
-  jobInput.value = about;
-  profileFormValidation.resetForm();
+  popupWithFormProfile.setInputValues(user.getUserInfo());
+  profileFormValidation.resetValidation();
   popupWithFormProfile.openPopup();
 });
 
 addCardButton.addEventListener('click', () => {
-  cardFormValidation.resetForm();
+  cardFormValidation.resetValidation();
   popupWithFormCard.openPopup();
 });
